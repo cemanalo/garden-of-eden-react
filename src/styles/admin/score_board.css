@@ -1,0 +1,31 @@
+.topData {
+  margin: 20px;
+}
+
+.roundText {
+  font-size: 40px;
+  text-align: center;
+  font-weight: 100;
+  margin: 20px;
+}
+
+.button {
+  margin: 30px 0;
+  text-align: right;
+}
+
+.appleTitle {
+  text-align: center;
+}
+
+.voteCount {
+  text-align: center;
+  font-size: 80px;
+  padding: 40px;
+  font-weight: 400;
+}
+
+.roundResult .round {
+  font-size: 1.5rem;
+  font-weight: 500;
+}

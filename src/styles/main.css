@@ -1,0 +1,24 @@
+.hudBar {
+  margin: 25px 10px;
+}
+
+.hud1>div {
+  display: inline-block;
+}
+
+.money {
+  float: right;
+}
+
+.apples {
+  margin: 50px 40px 25px;
+  text-align: center;
+  align-items: center;
+}
+
+.main.choose {
+  margin: 10px 10px;
+  font-size: 15px;
+  text-align: center;
+  font-weight: 400;
+}
