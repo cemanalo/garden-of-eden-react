@@ -1,0 +1,57 @@
+.winner {
+  margin: 70px 0 10px;
+  text-align: center;
+}
+
+.winner .realName {
+  font-size: 50px;
+  font-weight: 100;
+}
+
+div.endResultTitle {
+  text-align: left;
+  font-size: 15px;
+  margin: 12px 0;
+}
+
+.winner .label {
+  font-size: 18px;
+}
+
+.loosers > ul {
+  list-style-type: none;
+  margin: 10px;
+  padding-inline-start: 0px;
+}
+
+.loosers li {
+  margin: 8px 0;
+}
+
+.listItem {
+  display: inline-block;
+}
+
+.realName {
+  font-size: 16px;
+}
+
+.secretName {
+  font-size: 14px;
+  float: right;
+  color: #707070;
+}
+
+.secretNameWinner {
+  font-size: 14px;
+  color: #707070;
+  margin-top: -10px;
+}
+
+.loosersTitle {
+  text-align: center;
+  margin: 40px 0 15px;
+  font-size: 20px;
+  font-weight: 400;
+}
+

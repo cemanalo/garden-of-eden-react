@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Chart,
   BarSeries,
@@ -7,29 +7,69 @@ import {
   ValueAxis,
 } from '@devexpress/dx-react-chart-material-ui';
 import { Animation } from '@devexpress/dx-react-chart';
+import { Button } from '@material-ui/core';
 
-const data = [
-  { year: '1950', population: 2.525 },
-  { year: '1960', population: 3.018 },
-  { year: '1970', population: 3.682 },
-  { year: '1980', population: 4.440 },
-  { year: '1990', population: 5.310 },
-  { year: '2000', population: 6.127 },
-  { year: '2010', population: 6.930 },
-];
+import useStickyState from '../../utils/useStickyState'
+import userService from '../../services/user'
+import roomService from '../../services/room'
+import gameStatus from '../../utils/gameStatus'
+import adminIo from '../../io/adminIo'
 
-export default function ChartComponent () {
-  return <div className="chart">
-  <Chart data={data}>
-    <ArgumentAxis />
-    <ValueAxis max={7} />
+export default function ChartComponent (props) {
+  const [ users, setUsers ] = useState([])
+  const [ roomId ] = useStickyState("", "roomId")
+  useEffect(() => {
+    userService.getUsersByRoomId(roomId).then(users => setUsers(users))
+    props.io.on('userJoined', () => {
+      console.log('userJoined')
+      userService.getUsersByRoomId(roomId).then(users => setUsers(users))
+    })
+  }, [ roomId, props.io ])
 
-    <BarSeries
-      valueField="population"
-      argumentField="year"
-    />
-    <Title text="Round 1" />
-    <Animation />
-  </Chart>
+    const [ room, setRoom ] = useState({})
+    useEffect(() => {
+      roomService.getRoomById(roomId).then(room => setRoom(room))
+    }, [ roomId ])
+
+
+  const onStartGame = () => {
+    adminIo.startGame(props.io, roomId)
+  }
+
+  const onNextRound = async () => {
+    console.log("next round")
+    props.io.on(`${roomId}::nextRound`, () => {
+      console.log('nextRound')
+      props.setActiveComponent('ROUND')
+    })
+    const room = await roomService.nextRound(roomId)
+    console.log('onNextRound', room)
+    props.io.emit('nextRound', roomId)
+  }
+
+  const onEndGame = () => {
+    console.log('end game')
+    props.io.on(`${roomId}::endGame`, () => props.onEndGame())
+    props.io.emit('endGame', roomId)
+  }
+
+  return <div>
+  <div className="chart">
+    <Chart data={users}>
+      <ArgumentAxis />
+      <ValueAxis />
+      <BarSeries
+        valueField="money"
+        argumentField="secretName"
+      />
+      <Title text={`Round ${room.round}`} />
+      <Animation />
+    </Chart>
+  </div>
+  <div className="button">
+    { room.gameStatus === gameStatus.WAITING_PLAYERS && <Button variant="contained" color="primary" onClick={onStartGame}>Start</Button> }
+    { room.gameStatus === gameStatus.ROUND_ENDED && <Button variant="contained" color="primary" onClick={onNextRound}>Next round</Button> }
+    { room.gameStatus !== gameStatus.WAITING_PLAYERS && <Button variant="contained" color="primary" onClick={onEndGame}>End Game</Button> }
+  </div>
 </div>
 }

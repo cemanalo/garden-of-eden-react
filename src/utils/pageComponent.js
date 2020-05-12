@@ -1,0 +1,7 @@
+export default {
+  HOME: 'HOME',
+  MAIN: 'MAIN',
+  SCORE_BOARD: 'SCORE_BOARD',
+  ROUND_RESULT: 'ROUND_RESULT',
+  END_RESULT: 'END_RESULT'
+}

@@ -1,28 +1,53 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState }  from 'react';
 import Home from './components/Home'
 import Main from './components/Main'
 import ScoreBoard from './components/admin/ScoreBoard'
-import socketIOClient from "socket.io-client";
+import EndResult from './components/EndResult'
 
-import './styles/home.css'
-
-const ENDPOINT = "http://127.0.0.1:4001";
+import appIo from './io/app'
+import pageComponent from './utils/pageComponent'
+import './App.css'
 
 function App() {
-  const [response, setResponse] = useState("");
 
-  useEffect(() => {
-    const socket = socketIOClient(ENDPOINT);
-    socket.on("FromAPI", data => {
-      setResponse(data);
-    });
-  }, []);
+  const [ connectionStatus, setConnectionStatus ] = useState({ value: '', message: ''})
+  const [ activeComponent, setActiveComponent ] = useState(pageComponent.HOME)
+  const [ room, setRoom ] = useState()
+  const [ io, setIo ] = useState()
+
+  const onSetIo = (io) => {
+    setIo(io)
+    appIo(io, setConnectionStatus)
+  }
+
+  const onConnectionError = () => {
+    setConnectionStatus({
+      value: 'failed',
+      message: 'Failed to connect from server'
+    })
+  }
+  const renderComponent = () => {
+    switch(activeComponent) {
+      case pageComponent.HOME: 
+        return <Home 
+          setActiveComponent={setActiveComponent}
+          setIo={onSetIo} 
+          onConnectionError={onConnectionError}
+          setRoom={setRoom}
+        />
+      case pageComponent.MAIN: return <Main io={io} room={room} setActiveComponent={setActiveComponent} />
+      case pageComponent.SCORE_BOARD: return <ScoreBoard io={io} room={room} setActiveComponent={setActiveComponent}/>
+      case pageComponent.END_RESULT: return <EndResult setActiveComponent={setActiveComponent} />
+      default: return <Home />
+    }
+  }
 
   return (
     <div className="App">
-      <Home />
-      {/* <Main /> */}
-      {/* <ScoreBoard /> */}
+      <div className={ `connectionStatus ${connectionStatus.value}`}>
+        {connectionStatus.message}
+      </div>
+      { renderComponent() }
     </div>
   );
 }

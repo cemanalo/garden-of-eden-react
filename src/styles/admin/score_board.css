@@ -14,6 +14,10 @@
   text-align: right;
 }
 
+.button > button {
+  margin-left: 10px;
+}
+
 .appleTitle {
   text-align: center;
 }
