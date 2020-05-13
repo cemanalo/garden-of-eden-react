@@ -1,13 +1,13 @@
 export default {
   async getUsersByRoomId(roomId) {
-    const res = await fetch(`/users?roomId=${roomId}`)
+    const res = await fetch(`${process.env.REACT_APP_SOCKET_SERVER}/users?roomId=${roomId}`)
     return await res.json()
   },
 
   async joinUser(user) {
     const { userId, roomId, name } = user
 
-    const res = await fetch(`/room/${roomId}/user/${userId}`, {
+    const res = await fetch(`${process.env.REACT_APP_SOCKET_SERVER}/room/${roomId}/user/${userId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -23,7 +23,7 @@ export default {
   async submitApple(io, user, round, apple) {
     const { userId, roomId } = user
     
-    const res = await fetch(`/user/${userId}/room/${roomId}/submitApple`, {
+    const res = await fetch(`${process.env.REACT_APP_SOCKET_SERVER}/user/${userId}/room/${roomId}/submitApple`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -40,7 +40,7 @@ export default {
   },
 
   async getUser(userId, roomId) {
-    const res = await fetch(`/user/${userId}/room/${roomId}`, {
+    const res = await fetch(`${process.env.REACT_APP_SOCKET_SERVER}/user/${userId}/room/${roomId}`, {
       headers: {
         'Content-Type': 'application/json'
       }
