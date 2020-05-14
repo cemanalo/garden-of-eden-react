@@ -1,0 +1,7 @@
+version: '3'
+services:
+  webapp:
+    image: node:alpine
+    env_file: .env
+    volumes:
+      - .:/opt/app
