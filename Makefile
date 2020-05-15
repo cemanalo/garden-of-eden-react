@@ -1,4 +1,4 @@
-# COMPOSE_RUN_APP = docker-compose run --rm webapp
+COMPOSE_RUN_APP = docker-compose run --rm -p 3000:3000 webapp
 DEPS_DIRS = node_modules
 DEPS_ARTIFACT = $(DEPS_DIRS).tar.gz
 
@@ -16,11 +16,13 @@ envfile:
 	cp $(ENVFILE) .env
 
 start:
-	$(COMPOSE_RUN_APP) 
+	$(COMPOSE_RUN_APP) make _depsNpmInstall _start
+
+stop:
+	docker-compose down webapp --remove-orphans
 
 _depsNpmInstall:
-	echo "HELLO"
-	npm install
+	yarn install
 
 _depsPack:
 	rm -f $(DEPS_ARTIFACT)
@@ -29,3 +31,6 @@ _depsPack:
 _depsUnpack: $(DEPS_ARTIFACT)
 	rm -fr $(DEPS_DIRS)
 	tar -xzf $(DEPS_ARTIFACT)
+
+_start:
+	yarn start

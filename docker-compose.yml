@@ -1,7 +1,8 @@
 version: '3'
 services:
   webapp:
-    image: node:alpine
+    image: node:stretch
     env_file: .env
     volumes:
       - .:/opt/app
+    working_dir: /opt/app
