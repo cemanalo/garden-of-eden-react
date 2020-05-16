@@ -120,7 +120,7 @@ export default function Main (props) {
       <div className="money"><span>{formatMoney.format(user.money || 0)}</span></div>
       </div>
       <div className="hud2">
-      <div className="secretName"><span>Secret: { secretName }</span></div>
+      <div className="secretNameMain"><span>Secret: { secretName }</span></div>
       </div>
     </div>
     

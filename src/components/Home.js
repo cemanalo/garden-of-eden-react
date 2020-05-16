@@ -117,7 +117,7 @@ export default function Home (props) {
         <TextField id="nameText" label="Name" onChange={onNameChange} value={name} required />
       </div>
       { isAdmin && <div className="password">
-          <TextField id="nameText" label="Password" onChange={onPasswordChange} value={password} required type="password" />
+          <TextField id="password" label="Password" onChange={onPasswordChange} value={password} required type="password" />
         </div>
       }
       

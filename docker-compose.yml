@@ -6,3 +6,10 @@ services:
     volumes:
       - .:/opt/app
     working_dir: /opt/app
+  awscli:
+    image: amazon/aws-cli
+    env_file: .env
+    volumes:
+      - ./build:/opt/app
+      - ~/.aws:/root/.aws
+    working_dir: /opt/app
