@@ -13,6 +13,7 @@ import userService from '../services/user'
 import CheckIcon from '@material-ui/icons/Check';
 
 import '../styles/main.css'
+import gameStatus from '../utils/gameStatus';
 
 export default function Main (props) {
   const [ userId ] = useStickyState("", "userId")
@@ -146,9 +147,9 @@ export default function Main (props) {
         </Grid>
       </Grid>
       <div className="main choose">
-        { apple && <span>{apple} selected</span> }
-        { !apple && <span>Choose 1 apple</span>}
-        
+        { room.gameStatus === gameStatus.WAITING_PLAYERS && <span>Waiting other players</span> }
+        { room.gameStatus !== gameStatus.WAITING_PLAYERS && apple && <span>{apple} selected</span> }
+        { room.gameStatus !== gameStatus.WAITING_PLAYERS && !apple && <span>Choose 1 apple</span> }
       </div>
     </div>
     <div className="progressBar">

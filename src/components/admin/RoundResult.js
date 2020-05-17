@@ -99,7 +99,7 @@ export default function RoundResult (props) {
     <div className="loading">
       { isLoading && <LinearProgress />}
     </div>
-    <div class="button">
+    <div className="button">
       { result.length === 0 && <Button disabled={isLoading} variant="contained" color="primary" onClick={onEndRoundClick}>End Round</Button> }
       { result.length > 0 && <Button variant="contained" color="primary" onClick={onShowResultClick}>Show Result</Button> }
       { result.length > 0 && <Button variant="contained" color="primary" onClick={onBackClick}>Back</Button> }

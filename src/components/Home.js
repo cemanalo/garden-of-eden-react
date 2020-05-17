@@ -91,6 +91,12 @@ export default function Home (props) {
           const component = isAdmin ? pageComponent.SCORE_BOARD : pageComponent.MAIN
           props.setActiveComponent(component)
         })
+      } else {
+        setIsLoading(false)
+        setIsRoomIdValid({
+          valid: false,
+          message: "Room not found"
+        })
       }
     } catch(error) {
       props.onConnectionError()

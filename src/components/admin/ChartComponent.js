@@ -34,6 +34,7 @@ export default function ChartComponent (props) {
 
   const onStartGame = () => {
     adminIo.startGame(props.io, roomId)
+    props.setActiveComponent('ROUND')
   }
 
   const onNextRound = async () => {
