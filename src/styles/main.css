@@ -22,3 +22,15 @@
   text-align: center;
   font-weight: 400;
 }
+
+.gain {
+  color: green;
+}
+
+.lost {
+  color: red;
+}
+
+.historyTitle {
+  margin: 25px 10px;
+}

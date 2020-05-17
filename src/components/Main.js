@@ -1,8 +1,7 @@
 import React, { useState, useEffect }from 'react';
-import { Container, IconButton, Button, LinearProgress, Snackbar, Grid  } from '@material-ui/core';
+import { Container, IconButton, Button, LinearProgress, Grid, ListItem, ListItemText } from '@material-ui/core';
 import AppleIcon from '@material-ui/icons/Apple';
 import SendIcon from '@material-ui/icons/Send';
-import MuiAlert from '@material-ui/lab/Alert';
 
 import appleConfig from '../utils/appleConfig'
 import useStickyState from '../utils/useStickyState'
@@ -64,24 +63,13 @@ export default function Main (props) {
     props.io.on(`${roomId}::showResult`, () => {
       userService.getUser(userId, roomId).then(user => {
         setUser(user)
-        const history = user.history[room.round]
-        const severity = history > 0 ? 'success' : 'error'
-        const message = `You ${history > 0 ? 'gain' : 'lost'} ${history}`
-
-        setSnackBarMessage(message)
-        setSnackBarSeverity(severity)
-        setSnackBarOpen(true)
       })
     })
 
     props.io.on(`${roomId}::endGame`, () => {
       props.setActiveComponent(pageComponent.END_RESULT)
     })
-  }, [ props, userId, roomId, room ])
-
-  const [ snackBarMessage, setSnackBarMessage ] = useState("")
-  const [ snackBarSeverity, setSnackBarSeverity ] = useState("")
-  const [ snackBarOpen, setSnackBarOpen ] = useState(false)
+  }, [ props, userId, roomId, room, setUser ])
 
   const formatMoney = new Intl.NumberFormat('en-PH', {
     style: 'currency',
@@ -105,14 +93,19 @@ export default function Main (props) {
     return isAppleSubmitted || (room.gameStatus && GameStatus.isWaiting(room.gameStatus))
   }
 
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
+  const renderHistory = () => {
+    if (user.history && user.history.length > 1) {
+      return user.history.map((value, index) => {
+        if(value) {
+          return <ListItem>
+            <ListItemText>{index}. <span className={value > 0 ? 'gain' : 'lost'}>{value}</span></ListItemText>
+          </ListItem>
+        }
+
+        return ''
+      })
     }
-    console.log('handleClose')
-    
-    setSnackBarOpen(false)
-  };
+  }
 
   return <Container maxWidth="sm">
     <div className="hudBar">
@@ -160,10 +153,13 @@ export default function Main (props) {
         Submit
       </Button>
     </div>
-    <Snackbar open={snackBarOpen} autoHideDuration={6000} onClose={handleClose}>
-      <MuiAlert elevation={6} variant="filled" onClose={handleClose} severity={snackBarSeverity}>
-        {snackBarMessage}
-      </MuiAlert>
-    </Snackbar>
+    <div className="history">
+      <div className="historyTitle">
+        Round History
+      </div>
+      <div className="historyList">
+        { renderHistory() }
+      </div>
+    </div>
   </Container>
 }

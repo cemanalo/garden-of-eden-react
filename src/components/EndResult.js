@@ -56,12 +56,12 @@ export default function EndResult(props) {
         {formatMoney.format(winner.money || 0)}
       </div>
     </div>
-    <div className="loosers">
-      <div className="loosersTitle">
-        Loosers
+    <div className="losers">
+      <div className="losersTitle">
+        Losers
       </div>
       <ul>
-        {renderUsers()}
+        { renderUsers() }
       </ul>
     </div>
     <div className="button">

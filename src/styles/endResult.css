@@ -18,13 +18,13 @@ div.endResultTitle {
   font-size: 18px;
 }
 
-.loosers > ul {
+.losers > ul {
   list-style-type: none;
   margin: 10px;
   padding-inline-start: 0px;
 }
 
-.loosers li {
+.losers li {
   margin: 8px 0;
 }
 
@@ -48,7 +48,7 @@ div.endResultTitle {
   margin-top: -10px;
 }
 
-.loosersTitle {
+.losersTitle {
   text-align: center;
   margin: 40px 0 15px;
   font-size: 20px;
