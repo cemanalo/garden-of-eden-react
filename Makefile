@@ -30,7 +30,7 @@ deploy:
 	$(COMPOSE_AWSCLI) s3 sync . s3://gardenofeden.com
 
 deployQa:
-	make clean envfile ENVFILE=.env.qa build deploy
+	make clean envfile ENVFILE=env.qa build deploy
 
 stop:
 	docker stop garden-of-eden-react
