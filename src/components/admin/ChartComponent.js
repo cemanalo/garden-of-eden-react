@@ -19,10 +19,22 @@ export default function ChartComponent (props) {
   const [ users, setUsers ] = useState([])
   const [ roomId ] = useStickyState("", "roomId")
   useEffect(() => {
-    userService.getUsersByRoomId(roomId).then(users => setUsers(users))
+    userService.getUsersByRoomId(roomId).then(users => {
+      const mappedUsers = users.map(user => {
+        user.argumentField = user.isRevealName ? user.name : user.secretName
+        return user
+      })
+      setUsers(mappedUsers)
+    })
     props.io.on('userJoined', () => {
       console.log('userJoined')
-      userService.getUsersByRoomId(roomId).then(users => setUsers(users))
+      userService.getUsersByRoomId(roomId).then(users => {
+        const mappedUsers = users.map(user => {
+          user.argumentField = user.isRevealName ? user.name : user.secretName
+          return user
+        })
+        setUsers(mappedUsers)
+      })
     })
   }, [ roomId, props.io ])
 
@@ -61,7 +73,7 @@ export default function ChartComponent (props) {
       <ValueAxis />
       <BarSeries
         valueField="money"
-        argumentField="secretName"
+        argumentField="argumentField"
       />
       <Title text={`Round ${room.round}`} />
       <Animation />

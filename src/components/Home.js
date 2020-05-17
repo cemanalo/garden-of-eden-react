@@ -8,7 +8,7 @@ import { uuid } from 'uuidv4'
 import useStickyState from '../utils/useStickyState'
 import pageComponent from '../utils/pageComponent'
 import roomService from '../services/room'
-
+import gameStatus from '../utils/gameStatus'
 import homeIo from '../io/homeIo'
 
 import '../styles/home.css'
@@ -73,8 +73,11 @@ export default function Home (props) {
 
     try {
       const room = await roomService.getRoomById(roomId)
-      console.log('aaaa', room)
       if (room) {
+        if(room.gameStatus === gameStatus.END) {
+          props.setActiveComponent(pageComponent.END_RESULT)
+          return
+        }
         props.setRoom(room)
         const socket = socketIOClient(process.env.REACT_APP_SOCKET_SERVER, { reconnectionAttempts: 20 })
         props.setIo(socket)

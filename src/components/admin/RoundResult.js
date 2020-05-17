@@ -43,7 +43,7 @@ export default function RoundResult (props) {
       <ListItemIcon>
         { user.round && user.round[round] ? <LockIcon style={ { color: 'green' }}/> : <LockOpenIcon />}
       </ListItemIcon>
-      <ListItemText>{user.secretName}</ListItemText>
+      <ListItemText>{user.isRevealName ? user.name : user.secretName}</ListItemText>
     </ListItem>)
 
   }

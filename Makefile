@@ -18,10 +18,10 @@ envfile:
 	cp $(ENVFILE) .env
 
 start:
-	$(COMPOSE_RUN_APP) make _deps _start
+	$(COMPOSE_RUN_APP) make _start
 
 build:
-	$(COMPOSE_RUN) make _deps _build
+	$(COMPOSE_RUN) make _build
 
 clean:
 	$(COMPOSE_RUN) make _clean
