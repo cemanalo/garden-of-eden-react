@@ -98,7 +98,7 @@ export default function Main (props) {
       return user.history.map((value, index) => {
         if(value) {
           return <ListItem>
-            <ListItemText>{index}. <span className={value > 0 ? 'gain' : 'lost'}>{value}</span></ListItemText>
+            <ListItemText>{index}. <span className={value > 0 ? 'gain' : 'lost'}>{formatMoney(value)}</span></ListItemText>
           </ListItem>
         }
 
