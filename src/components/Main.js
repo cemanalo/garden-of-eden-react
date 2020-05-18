@@ -111,7 +111,7 @@ export default function Main (props) {
     <div className="hudBar">
       <div className="hud1">
       <div className="name"><span>Name: {name}</span></div>
-      <div className="money"><span>{formatMoney.format(user.money || 0)}</span></div>
+      <div className="money"><span className={user.money > 0 ? 'gain' : 'lost'}>{formatMoney.format(user.money || 0)}</span></div>
       </div>
       <div className="hud2">
       <div className="secretNameMain"><span>Secret: { secretName }</span></div>
