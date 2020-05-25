@@ -25,7 +25,7 @@ export default function ScoreBoard (props) {
     props.setActiveComponent(pageComponent.END_RESULT)
   }
 
-  return <Container maxWidth={"md"}>
+  return <Container maxWidth={"xl"}>
     <div className="topData">
       <div className="room">
         <span>Room: {roomId}</span>

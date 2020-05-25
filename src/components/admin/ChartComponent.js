@@ -23,7 +23,7 @@ export default function ChartComponent (props) {
       const mappedUsers = users.map(user => {
         user.argumentField = user.isRevealName ? user.name : user.secretName
         return user
-      })
+      }).sort((a,b) => a.money - b.money)
       setUsers(mappedUsers)
     })
     props.io.on('userJoined', () => {
@@ -32,7 +32,7 @@ export default function ChartComponent (props) {
         const mappedUsers = users.map(user => {
           user.argumentField = user.isRevealName ? user.name : user.secretName
           return user
-        })
+        }).sort((a,b) => a.money - b.money)
         setUsers(mappedUsers)
       })
     })
@@ -68,12 +68,13 @@ export default function ChartComponent (props) {
 
   return <div>
   <div className="chart">
-    <Chart data={users}>
-      <ArgumentAxis />
-      <ValueAxis />
+    <Chart data={users} rotated>
+      <ValueAxis position="bottom" />
+      <ArgumentAxis position="left" />
       <BarSeries
         valueField="money"
         argumentField="argumentField"
+        rotated={true}
       />
       <Title text={`Round ${room.round}`} />
       <Animation />
